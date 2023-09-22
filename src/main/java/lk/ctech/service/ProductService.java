@@ -3,6 +3,8 @@ package lk.ctech.service;
 import lk.ctech.dao.ProductDao;
 import lk.ctech.entity.Product;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -18,8 +20,9 @@ public class ProductService {
         return productDao.save(product);
     }
 
-    public List<Product> getAllProducts() {
-        return (List<Product>) productDao.findAll();
+    public List<Product> getAllProducts(int pageNumber) {
+        Pageable pageable = PageRequest.of(pageNumber, 12);
+        return (List<Product>) productDao.findAll(pageable);
     }
 
     public Product getProductDetailsById(Integer productId) {
