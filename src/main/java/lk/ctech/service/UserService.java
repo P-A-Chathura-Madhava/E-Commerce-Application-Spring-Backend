@@ -62,7 +62,6 @@ public class UserService {
         userRoles.add(role);
         user.setRole(userRoles);
         user.setUserPassword(getEncodedPassword(user.getUserPassword()));
-
         return userDao.save(user);
     }
 
