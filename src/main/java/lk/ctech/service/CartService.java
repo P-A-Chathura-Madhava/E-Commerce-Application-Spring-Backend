@@ -10,6 +10,8 @@ import lk.ctech.entity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class CartService {
 
@@ -34,5 +36,11 @@ public class CartService {
             return cartDao.save(cart);
         }
         return null;
+    }
+
+    public List<Cart> getCartDetails(){
+        String username = JwtRequestFilter.CURRENT_USER;
+        User user = userDao.findById(username).get();
+        return cartDao.findByUser(user);
     }
 }

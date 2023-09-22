@@ -9,7 +9,7 @@ import java.util.List;
 
 @Repository
 public interface CartDao extends CrudRepository<Cart, Integer>{
-//
-//	public List<Cart> findByUser(User user);
+
+	public List<Cart> findByUser(User user);
 
 }
