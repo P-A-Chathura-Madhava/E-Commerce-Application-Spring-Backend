@@ -1,6 +1,7 @@
 package lk.ctech.service;
 
 import lk.ctech.configuration.JwtRequestFilter;
+import lk.ctech.dao.CartDao;
 import lk.ctech.dao.OrderDetailDao;
 import lk.ctech.dao.ProductDao;
 import lk.ctech.dao.UserDao;
@@ -25,7 +26,10 @@ public class OrderDetailService {
     @Autowired
     private UserDao userDao;
 
-    public void placeOrder(OrderInput orderInput) {
+    @Autowired
+    private CartDao cartDao;
+
+    public void placeOrder(OrderInput orderInput, boolean isSingleProductCheckout) {
         List<OrderProductQuantity> productQuantityList = orderInput.getOrderProductQuantityList();
 
         for (OrderProductQuantity o : productQuantityList) {
@@ -43,6 +47,11 @@ public class OrderDetailService {
                     product.getProductDiscountedPrice() * o.getQuantity(),
                     product,
                     user);
+            if(!isSingleProductCheckout) {
+                List<Cart> carts= cartDao.findByUser(user);
+                carts.stream().forEach(x -> cartDao.deleteById(x.getCartId()));
+
+            }
             orderDetailDao.save(orderDetail);
         }
     }
