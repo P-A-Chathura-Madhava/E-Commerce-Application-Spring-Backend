@@ -68,4 +68,12 @@ public class OrderDetailService {
         orderDetailDao.findAll().forEach(x -> orderDetails.add(x));
         return orderDetails;
     }
+
+    public void markOrderAsDelivered(Integer orderId) {
+        OrderDetail orderDetail = orderDetailDao.findById(orderId).get();
+        if (orderDetail != null) {
+            orderDetail.setOrderStatus("Delivered");
+            orderDetailDao.save(orderDetail);
+        }
+    }
 }
