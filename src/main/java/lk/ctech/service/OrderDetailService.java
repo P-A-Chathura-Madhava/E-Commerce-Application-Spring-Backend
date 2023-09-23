@@ -10,6 +10,7 @@ import lk.ctech.entity.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -60,5 +61,11 @@ public class OrderDetailService {
         String currentUser = JwtRequestFilter.CURRENT_USER;
         User user = userDao.findById(currentUser).get();
         return orderDetailDao.findByUser(user);
+    }
+
+    public List<OrderDetail> getAllOrderDetails(){
+        List<OrderDetail> orderDetails = new ArrayList<>();
+        orderDetailDao.findAll().forEach(x -> orderDetails.add(x));
+        return orderDetails;
     }
 }
