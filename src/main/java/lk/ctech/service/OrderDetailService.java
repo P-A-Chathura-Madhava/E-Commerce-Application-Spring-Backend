@@ -55,4 +55,10 @@ public class OrderDetailService {
             orderDetailDao.save(orderDetail);
         }
     }
+
+    public List<OrderDetail> getOrderDetails() {
+        String currentUser = JwtRequestFilter.CURRENT_USER;
+        User user = userDao.findById(currentUser).get();
+        return orderDetailDao.findByUser(user);
+    }
 }
